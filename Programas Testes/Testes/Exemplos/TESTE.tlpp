@@ -1,0 +1,17 @@
+#include "totvs.ch"
+
+Function U_TESTEE()
+
+    // Prepara o ambiente
+    rpcSetEnv('99','01','vinicius','123','FAT','U_TESTEE')
+
+    // 
+    dbSelectArea("SA1")
+
+    nAreaSA1 := select("SA1")
+
+    dbSelectArea(nAreaSA1)
+
+    rpcClearEnv()
+
+return
