@@ -29,7 +29,7 @@ Function U_GCTA001
     aadd(aRotina,{"Visualizar","axVisual"  ,0,2})
     aadd(aRotina,{"Incluir"   ,"axInclui"  ,0,3})
     aadd(aRotina,{"Alterar"   ,"axAltera"  ,0,4})
-    aadd(aRotina,{"Excluir"   ,"axDeleta"  ,0,5})
+    aadd(aRotina,{"Excluir"   ,"U_GCTA001D",0,5})
     aadd(aRotina,{"Legendas"  ,"U_GCTA001L",0,6})
 
     dbSelectArea("Z50")
@@ -38,6 +38,30 @@ Function U_GCTA001
     mBrowse(,,,,alias(),,,,,nOpcPad,aLegenda)
 
 Return
+
+// Programa auxiliar para exclusao de item
+Function U_GCTA001D(cAlias,nReg,nOpc)
+
+    Local cAliasSQL := ''
+    Local lExist    := .F.
+
+    cAliasSQL       := getNextAlias()
+
+    BeginSQL alias cAliasSQL
+        SELECT TOP 1 FROM %table:Z51% Z51
+        WHERE Z51.%notdel%
+        AND Z51_FILIAL = %exp:xFilial('Z51')%
+        AND Z51_TIPO = %exp:Z50->Z50_CODIGO%
+    EndSQL
+
+    (cAliasSQL)->(dbEval({|| lExist := .T.}),dbCloseArea())
+
+    IF lExist
+        fwAlertWarning('Tipo de contrato ja utilizado!','Atenção')
+        Return .F.
+    EndIF
+
+Return axDeleta(cAlias,nReg,nOpc)
 
 // Funcao auxiliar para descricao das legendas
 Function U_GCTA001L
