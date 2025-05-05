@@ -1,0 +1,41 @@
+#include 'totvs.ch'
+
+Function U_GCTA002
+
+    Private cTitulo := 'Cadastro de Contratos - Prototipo Modelo 3'
+    Private aRotina[0]
+
+    // Montagem do array de intens de menu
+    aadd(aRotina,{"Pesquisar" ,"axPesqui"  ,0,1})
+    aadd(aRotina,{"Visualizar","U_GCTA002M",0,2})
+    aadd(aRotina,{"Incluir"   ,"U_GCTA002M",0,3})
+    aadd(aRotina,{"Alterar"   ,"U_GCTA002M",0,4})
+    aadd(aRotina,{"Excluir"   ,"U_GCTA002M",0,5})
+
+    Z51->(dbSetOrder(1),mBrowse(,,,,alias()))
+
+Return
+
+Function U_GCTA002M(cAlias,nReg,nOpc)
+
+    Local oDlg
+    Local aAdvSize := msAdvSize()
+
+    oDlg        := tDialog():new(0           ,;           // Cordenada Inicial, Linha inicial (Pixels)
+                                 0           ,;           // Cordenada Inicial, Coluna inicial 
+                                 aAdvSize[6] ,;           // Cordenada Final, Linha inicial
+                                 aAdvSize[5] ,;           // Cordenada Final, Coluna inicial
+                                 cTitulo     ,;           // Titulo da janela
+                                 Nil         ,;           // Fixo
+                                 Nil         ,;           // Fixo
+                                 Nil         ,;           // Fixo
+                                 Nil         ,;           // Fixo
+                                 CLR_BLACK   ,;           // Cor do Texto
+                                 CLR_WHITE   ,;           // Cor do fundo da tela
+                                 Nil         ,;           // Fixo
+                                 Nil         ,;           //
+                                 .T.          )           // Indica que as coodernadas serao em pixel
+
+    oDlg:activate()
+
+Return
