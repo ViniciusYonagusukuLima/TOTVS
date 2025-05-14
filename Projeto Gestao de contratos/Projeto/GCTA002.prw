@@ -20,6 +20,9 @@ Function U_GCTA002M(cAlias,nReg,nOpc)
 
     Local oDlg
     Local aAdvSize := msAdvSize()
+    Local aInfo    := {aAdvSize[1],aAdvSize[2],aAdvSize[3],aAdvSize[4],3,3}
+    Local aObj     := {{100,120,.T.,.F.},{100,100,.T.,.T.},{100,010,.T.,.F.}}
+    Local aPObj    := msObjSize(aInfo,aObj)
 
     oDlg        := tDialog():new(0           ,;           // Cordenada Inicial, Linha inicial (Pixels)
                                  0           ,;           // Cordenada Inicial, Coluna inicial 
@@ -37,7 +40,7 @@ Function U_GCTA002M(cAlias,nReg,nOpc)
                                  .T.          )           // Indica que as coodernadas serao em pixel
 
     regToMemory(cAlias,if(nOpc == 3,.T.,.F.),.T.)
-
+    msmGet():new(cAlias,nReg,nOpc,,,,,aPObj[1])
     oDlg:activate()
 
 Return
