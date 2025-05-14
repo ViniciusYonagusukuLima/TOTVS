@@ -19,11 +19,16 @@ Return
 Function U_GCTA002M(cAlias,nReg,nOpc)
 
     Local oDlg
-    Local aAdvSize := msAdvSize()
-    Local aInfo    := {aAdvSize[1],aAdvSize[2],aAdvSize[3],aAdvSize[4],3,3}
-    Local aObj     := {{100,120,.T.,.F.},{100,100,.T.,.T.},{100,010,.T.,.F.}}
-    Local aPObj    := msObjSize(aInfo,aObj)
+    Local aAdvSize  := msAdvSize()
+    Local aInfo     := {aAdvSize[1],aAdvSize[2],aAdvSize[3],aAdvSize[4],3,3}
+    Local aObj      := {{100,120,.T.,.F.},{100,100,.T.,.T.},{100,010,.T.,.F.}}
+    Local aPObj     := msObjSize(aInfo,aObj)
+    Local nSalvar   := 0
+    Local bSalvar   := {|| (nSalvar := 1, oDlg:end())}
+    Local bCancelar := {|| (nSalvar := 0, oDlg:end())}
+    Local aButtons  := array(0)
 
+    //-- Tela de dialog principal
     oDlg        := tDialog():new(0           ,;           // Cordenada Inicial, Linha inicial (Pixels)
                                  0           ,;           // Cordenada Inicial, Coluna inicial 
                                  aAdvSize[6] ,;           // Cordenada Final, Linha inicial
@@ -41,6 +46,8 @@ Function U_GCTA002M(cAlias,nReg,nOpc)
 
     regToMemory(cAlias,if(nOpc == 3,.T.,.F.),.T.)
     msmGet():new(cAlias,nReg,nOpc,,,,,aPObj[1])
+    enchoicebar(oDlg,bSalvar,bCancelar,,aButtons)
+
     oDlg:activate()
 
 Return
