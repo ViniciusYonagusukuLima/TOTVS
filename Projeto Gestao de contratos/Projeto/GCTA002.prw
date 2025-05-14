@@ -36,6 +36,8 @@ Function U_GCTA002M(cAlias,nReg,nOpc)
                                  Nil         ,;           //
                                  .T.          )           // Indica que as coodernadas serao em pixel
 
+    regToMemory(cAlias,if(nOpc == 3,.T.,.F.),.T.)
+
     oDlg:activate()
 
 Return
