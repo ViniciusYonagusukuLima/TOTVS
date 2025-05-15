@@ -82,15 +82,15 @@ Function U_GCTA002M(cAlias,nReg,nOpc)
 								aPObj[2,3] 		,; //-- Cordenada final  , Coluna final
 								aPObj[2,4] 		,; //-- Cordenada final  , Linha final
 								nStyle	   		,; //-- Opcoes que podem ser executadas
-								'allWaysTrue()'	,; //-- Validacao de mudanca de linha
-								'allWaysTrue()'	,; //-- Validacao final
+								'U_GCTA002V(1)'	,; //-- Validacao de mudanca de linha
+								'U_GCTA002V(2)'	,; //-- Validacao final
 								'+Z52_ITEM'		,; //-- Definicao do campo incremental
 								NIL		   		,; //-- Lista dos campos que podem ser alterados
 								0		   		,; //-- Fixo
 								9999	   		,; //-- Total de linhas 
-								'allWaysTrue()'	,; //-- Funcao que validara cada campo preenchido
+								'U_GCTA002V(3)'	,; //-- Funcao que validara cada campo preenchido
 								Nil		 		,; //-- Fixo
-								'allWaysTrue()'	,; //-- Funcao que ira validar se a linha pode ser deletada
+								'U_GCTA002V(4)'	,; //-- Funcao que ira validar se a linha pode ser deletada
 								oDlg	   		,; //-- Objeto proprietario
 								aHeader    		,; //-- Vetor com as configuracoes dos campos
 								aCols	   		)  //-- Vetor com os conteudos dos campos
@@ -115,6 +115,24 @@ Function U_GCTA002M(cAlias,nReg,nOpc)
 	EndIF	
 
 Return
+
+/*/{Protheus.doc} U_GCTA002V
+	Valida linhas do Grid
+	@type  Static Function
+	/*/
+Function U_GCTA002V(nOpcao)
+
+	Local lValid := .T.
+
+	IF nOpcao == 1 	   //-- Validacao de mudanca de linha
+		lValid := oGet:chkObrigat(n)
+	ElseIF nOpcao == 2 //-- Validacao final
+	ElseIF nOpcao == 3 //-- Validacao campos
+	ElseIF nOpcao == 4 //-- Validacao de delecao da linha
+	EndIF
+
+Return lValid
+
 
 /*/{Protheus.doc} fnGravar
 	Funcao axiliar para gravacao
