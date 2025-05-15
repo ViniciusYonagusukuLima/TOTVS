@@ -1,4 +1,4 @@
-#include "totvs.ch"
+#include 'totvs.ch'
 
 /*/{Protheus.doc} U_GCTA001
     
@@ -21,9 +21,9 @@ Function U_GCTA001
     Private cCadastro := 'Cadastro de tipos de contratos'
     Private aRotina   := {}
 
-    aadd(aLegenda,{"Z50_TIPO == 'V'", "BR_AMARELO" })
-    aadd(aLegenda,{"Z50_TIPO == 'C'", "BR_LARANJA"})
-    aadd(aLegenda,{"Z50_TIPO == 'S'", "BR_CINZA"})
+    aadd(aLegenda,{"Z50_TIPO == 'V'","BR_AMARELO"})
+    aadd(aLegenda,{"Z50_TIPO == 'C'","BR_LARANJA"})
+    aadd(aLegenda,{"Z50_TIPO == 'S'","BR_CINZA"  })
 
     aadd(aRotina,{"Pesquisar" ,"axPesqui"  ,0,1})
     aadd(aRotina,{"Visualizar","axVisual"  ,0,2})
@@ -37,9 +37,12 @@ Function U_GCTA001
 
     mBrowse(,,,,alias(),,,,,nOpcPad,aLegenda)
 
-Return
+Return 
 
-// Programa auxiliar para exclusao de item
+/*/{Protheus.doc} U_GCTA001D
+    Programa auxiliar para excluao de item
+    @type  Function
+    /*/
 Function U_GCTA001D(cAlias,nReg,nOpc)
 
     Local cAliasSQL := ''
@@ -48,7 +51,7 @@ Function U_GCTA001D(cAlias,nReg,nOpc)
     cAliasSQL       := getNextAlias()
 
     BeginSQL alias cAliasSQL
-        SELECT TOP 1 FROM %table:Z51% Z51
+        SELECT TOP 1 * FROM %table:Z51% Z51
         WHERE Z51.%notdel%
         AND Z51_FILIAL = %exp:xFilial('Z51')%
         AND Z51_TIPO = %exp:Z50->Z50_CODIGO%
@@ -58,12 +61,14 @@ Function U_GCTA001D(cAlias,nReg,nOpc)
 
     IF lExist
         fwAlertWarning('Tipo de contrato ja utilizado!','Atenção')
-        Return .F.
+        return .F.
     EndIF
 
 Return axDeleta(cAlias,nReg,nOpc)
 
-// Funcao auxiliar para descricao das legendas
+/*/{Protheus.doc} U_GCTA001L
+    Funcao auxiliar para descricao das legendas
+    /*/
 Function U_GCTA001L
 
     Local aLegenda := array(0)
@@ -71,5 +76,6 @@ Function U_GCTA001L
     aadd(aLegenda,{"BR_AMARELO","Contrato de Vendas" })
     aadd(aLegenda,{"BR_LARANJA","Contrato de Compras"})
     aadd(aLegenda,{"BR_CINZA"  ,"Sem integração"     })
+    
+Return brwLegenda("Tipos de Contratos","Legenda",aLegenda)
 
-Return brwLegenda("Tipos de contratos","Legenda",aLegenda)
