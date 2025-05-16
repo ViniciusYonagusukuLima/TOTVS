@@ -32,6 +32,12 @@ Function U_GCTB002
     oBrowse:setAlias('Z51')
     oBrowse:setDescription('Contratos')
     oBrowse:setExecuteDef(4) 
+    oBrowse:addLegend("Z51_TPINTE == 'V' "                      ,"BR_AMARELO"   ,"Vendas"         ,'1')
+    oBrowse:addLegend("Z51_TPINTE == 'C' "                      ,"BR_LARANJA"   ,"Compras"        ,'1')
+    oBrowse:addLegend("Z51_TPINTE == 'S' "                      ,"BR_CINZA"     ,"Sem Integracao" ,'1')
+    oBrowse:addLegend("Z51_STATUS == 'N' .or. empty(Z51_STATUS)","AMARELO"   ,"Não Iniciado"   ,'2')
+    oBrowse:addLegend("Z51_STATUS == 'I' "                      ,"VERDE"     ,"Iniciado"       ,'2')
+    oBrowse:addLegend("Z51_STATUS == 'E' "                      ,"VERMELHO"  ,"Encerrado"      ,'2')
     oBrowse:activate()
     
 Return 
