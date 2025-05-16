@@ -63,6 +63,23 @@ Return aRotina
 Static Function viewdef
 
     Local oView
+    Local oModel
+    Local oStructZ51
+    Local oStructZ52
+
+    oStructZ51          := FWFormStruct(2,'Z51')
+    oStructZ52          := FWFormStruct(2,'Z52')
+    oModel              := FWLoadModel('GCTM002')
+    oView               := FWFormView():new()
+
+    oView:setModel(oModel)
+    oView:addField('Z51MASTER',oStructZ51,'Z51MASTER')
+    oView:addGrid('Z52DETAIL' ,oStructZ52,'Z52DETAIL')
+    oView:addIncrementView('Z52DETAIL','Z52_ITEM')
+    oView:createHorizontalBox('BOXZ51',50)
+    oView:createHorizontalBox('BOXZ52',50)
+    oView:setOwnerView('Z51MASTER','BOXZ51')
+    oView:setOwnerView('Z52DETAIL','BOXZ52')
  
 Return oView
 
