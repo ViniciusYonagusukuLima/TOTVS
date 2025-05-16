@@ -68,7 +68,7 @@ Static Function viewdef
     Local oStructZ52
 
     oStructZ51          := FWFormStruct(2,'Z51')
-    oStructZ52          := FWFormStruct(2,'Z52')
+    oStructZ52          := FWFormStruct(2,'Z52',{|cCampo| .not. alltrim(cCampo) $ 'Z52_NUMERO'})
     oModel              := FWLoadModel('GCTM002')
     oView               := FWFormView():new()
 
@@ -111,7 +111,7 @@ Static Function modeldef
     oModel:setPrimaryKey({'Z51_FILIAL','Z51_NUMERO'})
     oModel:addGrid('Z52DETAIL','Z51MASTER',oStructZ52,bLinePre,bLinePos,bGridPre,bGridPos,bGridLoad)
     oModel:getModel('Z52DETAIL'):setUniqueLine({'Z52_ITEM'})
-    oModel:setOptional('z52DETAIL',.T.)
+    oModel:setOptional('Z52DETAIL',.T.)
     oModel:setRelation('Z52DETAIL',{{'Z52_FILIAL','xFilial("Z52")'},{"Z52_NUMERO","Z51_NUMERO"}},Z52->(indexKey(1)))
 
 Return oModel
@@ -138,6 +138,6 @@ Return lValid
 
 Static Function vGridLoad(oGridModel,lCopy)
 
-    Local aRetorno := formGridLoad(oGridModel,lCopy)
+    Local aRetorno := formLoadGrid(oGridModel,lCopy)
 
 Return aRetorno
