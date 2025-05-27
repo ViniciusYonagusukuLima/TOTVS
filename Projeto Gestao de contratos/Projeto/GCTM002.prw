@@ -105,7 +105,18 @@ Static Function modeldef
     oStructZ51      := FWFormStruct(1,'Z51')
     oStructZ52      := FWFormStruct(1,'Z52')
 
-    oModel     := MPFormModel():new('MODEL_CGTM002',bModelPre,bModelPos,bCommit,bCancel)
+    bModelWhen := {|| oModel:getOperation() == 3 .or. oModel:getOperation() == 9}
+    bModelInit := {|| getSxeNum("Z51","Z51_NUMERO")}
+    oStructZ51:setProperty('Z51_NUMERO',MODEL_FIELD_INIT,bModelInit)
+    oStructZ51:setProperty('Z51_TIPO'  ,MODEL_FIELD_WHEN,bModelWhen)
+    oStructZ51:setProperty('Z51_NUMERO',MODEL_FIELD_WHEN,bModelWhen)
+    oStructZ51:setProperty('Z51_CLIENT',MODEL_FIELD_WHEN,bModelWhen)
+    oStructZ51:setProperty('Z51_LOJA'  ,MODEL_FIELD_WHEN,bModelWhen)
+    oStructZ51:setProperty('Z51_NOMCLI',MODEL_FIELD_WHEN,bModelWhen)
+    oStructZ51:setProperty('Z51_VALOR' ,MODEL_FIELD_WHEN,bModelWhen)
+    oStructZ51:setProperty('Z51_QTDMED',MODEL_FIELD_WHEN,bModelWhen)
+
+    oModel      := MPFormModel():new('MODEL_CGTM002',bModelPre,bModelPos,bCommit,bCancel)
     oModel:setDescription('Contratos')
     oModel:addFields('Z51MASTER',,oStructZ51)
     oModel:setPrimaryKey({'Z51_FILIAL','Z51_NUMERO'})
