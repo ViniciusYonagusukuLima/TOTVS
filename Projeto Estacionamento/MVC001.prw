@@ -3,7 +3,7 @@
 
 /*/------------------------------------------------------>
     Função:    MVC001
-    Descrição: Cria os menus do sistema de estacionamento
+    Descrição: Função principal para criar um Browser do estacionamento
     Tipo:      Function
     Autor:     Vinícius Lima
     Criado:    27/05/2025
@@ -22,7 +22,7 @@ Return
 
 /*/------------------------------------------------------>
     Função:    MenuDef
-    Descrição: Menu de operações da tela principal
+    Descrição: Adiciona os botoes no menu do Browse
     Tipo:      Static Function
     Autor:     Vinícius Lima
     Criado:    27/05/2025
@@ -42,7 +42,7 @@ Return aRotina
 
 /*/------------------------------------------------------>
     Função:    ViewDef
-    Descrição: Interface do usuário
+    Descrição: Construcao da interface gráfica
     Tipo:      Static Function
     Autor:     Vinícius Lima
     Criado:    27/05/2025
@@ -72,7 +72,7 @@ Return oView
 
 /*/------------------------------------------------------>
     Função:    ModelDef
-    Descrição: Modelo de Dados
+    Descrição: Construcao da regra de negocio
     Tipo:      Static Function
     Autor:     Vinícius Lima
     Criado:    27/05/2025
@@ -96,7 +96,7 @@ Static Function ModelDef()
     oStruSZ1 := FwFormStruct(1,'SZ1')
 
     bModelWhen := {|| oModel:getOperation() == 3 .or. oModel:getOperation() == 9}
-    bModelInit := {|| getSxeNum("SZ0","SZ0_CODIGO")}
+    bModelInit := {|| getSxeNum("SZ0","Z0_CODIGO")}
     bValid     := {|| vValid()}
 
 
@@ -119,7 +119,7 @@ Return oModel
 
 /*/------------------------------------------------------>
     Função:    vValid
-    Descrição: 
+    Descrição: Valida a duplicidade de dados na Grid
     Tipo:      Static Function
     Autor:     Vinícius Lima
     Criado:    05/06/2025

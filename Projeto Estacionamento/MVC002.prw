@@ -3,7 +3,7 @@
 
 /*/------------------------------------------------------>
     Função:    MVC002
-    Descrição: Função para criar um Browser
+    Descrição: Função principal para criar um Browser
     Tipo:      User Function
     Autor:     Vinícius Lima
     Criado:    29/05/2025
@@ -22,7 +22,7 @@ Return
 
 /*/------------------------------------------------------>
     Função:    MenuDef
-    Descrição: Adiciona os botoes no Browse
+    Descrição: Adiciona os botoes no menu do Browse
     Tipo:      Static Function
     Autor:     Vinícius Lima
     Criado:    29/05/2025
@@ -42,7 +42,7 @@ Return aRotina
 
 /*/------------------------------------------------------>
     Função:    ModelDef
-    Descrição: 
+    Descrição: Construcao da regra de negocio
     Tipo:      Static Function
     Autor:     Vinícius Lima
     Criado:    29/05/2025
@@ -51,10 +51,20 @@ Static Function ModelDef()
     
     Local oModel
     Local oStruSZ2
-
-    oModel   := MPFormModel():New('MVC002M',,,,)
+    Local bModelPre := {|oModel| .T.}
+    Local bModelPos := {|oModel| .T.}
+    Local bCommit   := {|oModel| FWFormCommit(oModel)}
+    Local bCancel   := {|oModel| fCancel(oModel)}
+    
     oStruSZ2 := FwFormStruct(1,'SZ2')
 
+    bModelWhen := {|| oModel:getOperation() == 3 .or. oModel:getOperation() == 9}
+    bModelInit := {|| getSxeNum("SZ2","Z2_CODIGO")}
+
+    oStruSZ2:setProperty('Z2_CODIGO',MODEL_FIELD_INIT ,bModelInit)
+    oStruSZ2:setProperty('Z2_CODIGO',MODEL_FIELD_WHEN ,bModelWhen)
+
+    oModel   := MPFormModel():New('MVC002M',bModelPre,bModelPos,bCommit,bCancel)
     oModel:addFields('SZ2MASTER',,oStruSZ2)
     oModel:setPrimaryKey({'Z2_FILIAL','Z2_CODIGO'})
     oModel:setDescription('Modelo de dados da Marca')
@@ -64,7 +74,7 @@ Return oModel
 
 /*/------------------------------------------------------>
     Função:    ViewDef
-    Descrição: 
+    Descrição: Construcao da interface gráfica
     Tipo:      Static Function
     Autor:     Vinícius Lima
     Criado:    29/05/2025
@@ -85,3 +95,17 @@ Static Function ViewDef()
     oView:setOwnerView('VIEW_SZ2','TELA1')
 
 Return oView
+
+Static Function fCancel(oModel)
+    
+    Local lCancel := FWFormCancel(oModel)
+
+    IF lCancel
+
+        IF __lSX8
+            rollbackSX8()
+        EndIF
+
+    EndIF
+
+Return lCancel
